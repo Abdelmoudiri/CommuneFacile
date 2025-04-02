@@ -13,7 +13,10 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'employe', 'citoyen'])->default('citoyen');
+            $table->enum('role', ['admin', 'employee', 'citizen'])->default('citizen');
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
             $table->rememberToken();
             $table->timestamps();
         });
