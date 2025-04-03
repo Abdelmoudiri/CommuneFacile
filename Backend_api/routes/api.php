@@ -19,7 +19,7 @@ Route::post('register', [JwtAuthController::class, 'register']);
 Route::post('login', [JwtAuthController::class, 'login']);
 
 // Protected routes
-Route::middleware('jwt.verify')->group(function () {
+Route::middleware('jwtauth')->group(function () {
     Route::get('user', [JwtAuthController::class, 'getUser']);
     Route::post('logout', [JwtAuthController::class, 'logout']);
     Route::post('refresh', [JwtAuthController::class, 'refresh']);
