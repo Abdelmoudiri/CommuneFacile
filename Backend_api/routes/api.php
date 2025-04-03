@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\JwtAuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\JwtAuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
