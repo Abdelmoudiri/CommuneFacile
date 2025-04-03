@@ -14,15 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'jwt' => \App\Http\Middleware\JwtMiddleware::class,
-            'role' => \App\Http\Middleware\CheckRole::class,
+            'jwt' => JwtMiddleware::class,
+            'role' => CheckRole::class,
         ]);
-        // Si vous avez besoin de middlewares globaux
-        // $middleware->append([
-        //     \Illuminate\Http\Middleware\HandleCors::class,
-        // ]);
-        
-        // Ajouter d'autres configurations middleware si nécessaire
+       
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // ...
