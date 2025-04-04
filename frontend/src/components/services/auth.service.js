@@ -1,5 +1,6 @@
 import api from './api';
-import jwt_decode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthService = {
   async login(credentials) {
@@ -68,7 +69,7 @@ const AuthService = {
     if (!token) return false;
     
     try {
-      const decoded = jwt_decode(token);
+      const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000;
       
       // Check if token is expired
