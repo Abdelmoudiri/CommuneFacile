@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\LogingRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class JwtAuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         $input = $request->only('name', 'email', 'password', 'c_password', 'role');
         $validator = Validator::make($input, [
