@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from '../components/common/Navbar';
+import Navbar from '../common/Navbar';
 import api from '../services/api';
-import Loading from '../components/common/Loading';
+import Loading from '../common/Loading';
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();

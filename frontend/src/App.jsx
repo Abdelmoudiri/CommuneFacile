@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from './components/contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
-import HomePage from './pages/HomePage';
-import DashboardPage from './pages/DashboardPage';
-import ProfilePage from './pages/ProfilePage';
+import HomePage from './components/pages/HomePage';
+import DashboardPage from './components/pages/DashboardPage';
+import ProfilePage from './components/pages/ProfilePage';
 
 // Auth Components
 import Login from './components/auth/Login';

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import api from '../../services/api';
+import api from '../services/api';
 
 const forgotPasswordSchema = Yup.object().shape({
   email: Yup.string()

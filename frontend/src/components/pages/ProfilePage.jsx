@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from '../components/common/Navbar';
+import Navbar from '../common/Navbar';
 
 const ProfileSchema = Yup.object().shape({
   name: Yup.string()

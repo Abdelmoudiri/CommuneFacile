@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from '../components/common/Navbar';
+import Navbar from '../common/Navbar';
 
 const HomePage = () => {
   const { isAuthenticated } = useAuth();
