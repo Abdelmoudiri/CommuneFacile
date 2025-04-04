@@ -70,15 +70,13 @@ class JwtAuthController extends Controller
             return $this->sendError($validator->errors(), 'Validation Error', 422);
         }
 
-        $input['password'] = bcrypt($input['password']); // use bcrypt to hash the passwords
-        $input['role'] = $input['role'] ?? 'citizen'; // Default role is citizen if not provided
+        $input['password'] = bcrypt($input['password']); 
+        $input['role'] = $input['role'] ?? 'citizen'; 
         
-        // Remove password confirmation from data to be saved
         unset($input['c_password']);
         
-        $user = User::create($input); // eloquent creation of data
+        $user = User::create($input); 
         
-        // Generate token for the newly registered user
         $token = JWTAuth::fromUser($user);
         
         $success = [
