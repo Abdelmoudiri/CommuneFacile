@@ -57,37 +57,25 @@ class JwtAuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)
-    {
-        $input = $request->only('name', 'email', 'password', 'c_password', 'role');
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'c_password' => 'required|same:password',
-            'role' => 'sometimes|string|in:admin,employee,citizen',
-        ]);
+{
+    $input = $request->validated(); 
 
-        if ($validator->fails()) {
-            return $this->sendError($validator->errors(), 'Validation Error', 422);
-        }
-
-        $input['password'] = bcrypt($input['password']); 
-        $input['role'] = $input['role'] ?? 'citizen'; 
-        
-        unset($input['c_password']);
-        
-        $user = User::create($input); 
-        
-        $token = JWTAuth::fromUser($user);
-        
-        $success = [
-            'user' => $user,
-            'token' => $token
-        ];
-        
-        return $this->sendResponse($success, 'User registered successfully', 201);
-    }
-
+    $input['password'] = bcrypt($input['password']); 
+    $input['role'] = $input['role'] ?? 'citizen'; 
+    
+    unset($input['c_password']); 
+    
+    $user = User::create($input); 
+    
+    $token = JWTAuth::fromUser($user);
+    
+    $success = [
+        'user' => $user,
+        'token' => $token
+    ];
+    
+    return $this->sendResponse($success, 'User registered successfully', 201);
+}
     /**
      * User login
      *
