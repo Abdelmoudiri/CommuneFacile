@@ -57,46 +57,38 @@ class JwtAuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)
-{
-    $input = $request->validated(); 
+    {
+        $input = $request->validated();
 
-    $input['password'] = bcrypt($input['password']); 
-    $input['role'] = $input['role'] ?? 'citizen'; 
-    
-    unset($input['c_password']); 
-    
-    $user = User::create($input); 
-    
-    $token = JWTAuth::fromUser($user);
-    
-    $success = [
-        'user' => $user,
-        'token' => $token
-    ];
-    
-    return $this->sendResponse($success, 'User registered successfully', 201);
-}
+        $input['password'] = bcrypt($input['password']);
+        $input['role'] = $input['role'] ?? 'citizen';
+
+        unset($input['c_password']);
+
+        $user = User::create($input);
+
+        $token = JWTAuth::fromUser($user);
+
+        $success = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return $this->sendResponse($success, 'User registered successfully', 201);
+    }
     /**
      * User login
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+
     public function login(LogingRequest $request)
     {
-        $input = $request->only('email', 'password');
-        $validator = Validator::make($input, [
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError($validator->errors(), 'Validation Error', 422);
-        }
+        $credentials = $request->validated();
 
         try {
-            // this authenticates the user details with the database and generates a token
-            if (!$token = JWTAuth::attempt($input)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return $this->sendError([], "Invalid login credentials", 400);
             }
         } catch (JWTException $e) {
@@ -104,13 +96,13 @@ class JwtAuthController extends Controller
         }
 
         $user = auth()->user();
-        
+
         $success = [
             'token' => $token,
             'user' => $user,
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ];
-        
+
         return $this->sendResponse($success, 'Successful login', 200);
     }
 
@@ -136,7 +128,7 @@ class JwtAuthController extends Controller
 
         return $this->sendResponse($user, "User data retrieved", 200);
     }
-    
+
     /**
      * Logout user (invalidate token)
      *
@@ -167,13 +159,13 @@ class JwtAuthController extends Controller
 
             $token = JWTAuth::refresh($token);
             $user = JWTAuth::setToken($token)->toUser();
-            
+
             $success = [
                 'token' => $token,
                 'user' => $user,
                 'expires_in' => auth('api')->factory()->getTTL() * 60
             ];
-            
+
             return $this->sendResponse($success, 'Token refreshed successfully');
         } catch (TokenExpiredException $e) {
             return $this->sendError([], 'Token has expired and cannot be refreshed', 401);
@@ -181,7 +173,7 @@ class JwtAuthController extends Controller
             return $this->sendError([], $e->getMessage(), 500);
         }
     }
-    
+
     /**
      * Update user profile
      *
@@ -192,34 +184,34 @@ class JwtAuthController extends Controller
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            
+
             $validator = Validator::make($request->all(), [
                 'name' => 'sometimes|required|string|max:255',
-                'email' => 'sometimes|required|email|unique:users,email,'.$user->id,
+                'email' => 'sometimes|required|email|unique:users,email,' . $user->id,
                 'password' => 'sometimes|required|min:8',
                 'c_password' => 'required_with:password|same:password',
             ]);
-            
+
             if ($validator->fails()) {
                 return $this->sendError($validator->errors(), 'Validation Error', 422);
             }
-            
+
             if ($request->has('name')) {
                 $user->name = $request->name;
             }
-            
+
             if ($request->has('email')) {
                 $user->email = $request->email;
             }
-            
+
             if ($request->has('password')) {
                 $user->password = bcrypt($request->password);
             }
-            
+
             $user->save();
-            
+
             return $this->sendResponse($user, 'Profile updated successfully');
-            
+
         } catch (JWTException $e) {
             return $this->sendError([], $e->getMessage(), 500);
         }
