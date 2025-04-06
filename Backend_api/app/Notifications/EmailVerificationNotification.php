@@ -11,12 +11,13 @@ class EmailVerificationNotification extends Notification
 {
     use Queueable;
 
+    protected $url;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($url)
     {
-        //
+        $this->url = $url;
     }
 
     /**
@@ -35,8 +36,11 @@ class EmailVerificationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
+            ->subject('Email Verification')
+            ->greeting("Hello $notifiable->name!")
+            ->line('We are excited to have you on board!')
+            ->line('Thank you for signing up to our app! To ensure the security of your account, please verify your email address.')
+            ->action('Verify Email Address', $this->url)
             ->line('Thank you for using our application!');
     }
 
