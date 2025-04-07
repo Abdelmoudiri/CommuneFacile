@@ -10,9 +10,9 @@ use Str;
 
 class EmailVerificationService
 {
-    public function sendVerificationEmail(Object $user)
+    public function sendVerificationEmail(object $user)
     {
-        Notification::send($user,new EmailVerificationNotification($this->generateVerificationLink($user->email)));
+        Notification::send($user, new EmailVerificationNotification($this->generateVerificationLink($user->email)));
 
 
     }
@@ -25,15 +25,16 @@ class EmailVerificationService
         if ($checkIfTokenExists) {
             $checkIfTokenExists->delete();
         }
-        $token=Str::uuid();
-        $url=config('app.url')."?token=$token&email=$email";
+        $token = Str::uuid();
+        $url = config('app.url') . "?token=$token&email=$email";
         $saveToken = EmailVerificationToken::create([
             'email' => $email,
             'token' => $token,
             'expired_at' => Carbon::now()->addMinutes(60),
         ]);
-        if ($saveToken) {
-            return $url;
+        if (!$saveToken) {
+            throw new \Exception('Failed to save token');
         }
+        return $url;
     }
 }
