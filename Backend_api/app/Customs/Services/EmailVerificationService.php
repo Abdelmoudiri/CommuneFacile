@@ -30,7 +30,7 @@ class EmailVerificationService
         $saveToken = EmailVerificationToken::create([
             'email' => $email,
             'token' => $token,
-            'expires_at' => Carbon::now()->addMinutes(60),
+            'expired_at' => Carbon::now()->addMinutes(60),
         ]);
         if ($saveToken) {
             return $url;

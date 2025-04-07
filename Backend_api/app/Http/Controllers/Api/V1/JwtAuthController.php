@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use App\Customs\Services\EmailVerificationService;
 
 class JwtAuthController extends Controller
 {
+    
+
+    public function __construct(private  EmailVerificationService $emailVerificationService)
+    {}
     /**
      * Send success response with data
      *
@@ -66,6 +71,8 @@ class JwtAuthController extends Controller
         unset($input['c_password']);
 
         $user = User::create($input);
+
+        $this->emailVerificationService->sendVerificationEmail($user);
 
         $token = JWTAuth::fromUser($user);
 
