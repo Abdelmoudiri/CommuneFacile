@@ -25,13 +25,4 @@ Route::middleware('jwtauth')->group(function () {
     Route::post('refresh', [JwtAuthController::class, 'refresh']);
     Route::put('profile', [JwtAuthController::class, 'updateProfile']);
     
-    // Autres routes protégées pour votre application de gestion communale
-    // Routes pour les requêtes citoyennes
-    // Route::apiResource('requests', RequestController::class);
-    
-    // Routes pour les événements
-    // Route::apiResource('events', EventController::class);
-    
-    // Routes pour les notifications
-    // Route::apiResource('notifications', NotificationController::class);
 });
