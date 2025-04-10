@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\V1\JwtAuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\UserController;
+
 
 
 // Public routes
@@ -17,4 +19,4 @@ Route::middleware('jwtauth')->group(function () {
     
 });
 
-Route::get("all_user",[ProfileFactory::class,"index"]);
+Route::get("all_user",[UserController::class,"index"]);
