@@ -3,16 +3,6 @@
 use App\Http\Controllers\Api\V1\JwtAuthController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 // Public routes
 Route::post('register', [JwtAuthController::class, 'register']);
@@ -26,3 +16,5 @@ Route::middleware('jwtauth')->group(function () {
     Route::put('profile', [JwtAuthController::class, 'updateProfile']);
     
 });
+
+Route::get("all_user",[ProfileFactory::class,"index"]);
