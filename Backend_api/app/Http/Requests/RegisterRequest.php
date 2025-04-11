@@ -17,7 +17,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'c_password' => 'required|same:password',
-            'role' => 'sometimes|string|in:admin,employee,citizen',
+            'role' => 'sometimes|string|in:Admin,Employee,Citizen',
         ];
     }
 
