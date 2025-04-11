@@ -19,5 +19,22 @@ class UserController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $user = User::with(['role', 'profile'])->find($id);
+        
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+        
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
+        ]);
+    }
+
 
 }

@@ -5,11 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-// Public routes
 Route::post('register', [JwtAuthController::class, 'register']);
 Route::post('login', [JwtAuthController::class, 'login']);
 
-// Protected routes
+
 Route::middleware('jwtauth')->group(function () {
     Route::get('user', [JwtAuthController::class, 'getUser']);
     Route::post('logout', [JwtAuthController::class, 'logout']);
