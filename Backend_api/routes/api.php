@@ -19,4 +19,5 @@ Route::middleware('jwtauth')->group(function () {
 
 
 Route::get('users',[\App\Http\Controllers\Api\V1\UserController::class, 'index']);
+Route::get('users/{id}',[\App\Http\Controllers\Api\V1\UserController::class, 'show']);
 
