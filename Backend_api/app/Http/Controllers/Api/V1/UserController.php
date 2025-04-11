@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['role', 'profile'])->get();
-
+        dd($users);
         return response()->json([
             'status' => 'success',
             'data' => $users,
