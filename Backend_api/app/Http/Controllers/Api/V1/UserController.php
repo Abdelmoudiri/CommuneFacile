@@ -11,16 +11,13 @@ class UserController extends Controller
 
     public function index()
     {
-        $query=User::with(['role','profile']);
-        dd($query);
+        $users = User::with(['role', 'profile'])->get();
 
         return response()->json([
-            'status'=>'success',
-            'data'=>$query
+            'status' => 'success',
+            'data' => $users,
         ]);
     }
-
-
 
 
 }
