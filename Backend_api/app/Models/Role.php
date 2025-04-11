@@ -9,4 +9,19 @@ class Role extends Model
 {
     /** @use HasFactory<\Database\Factories\RoleFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'permissions',
+        'description',
+    ];
+
+    protected $casts = [
+        'permissions' => 'json',
+    ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
