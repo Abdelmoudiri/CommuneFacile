@@ -46,11 +46,12 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'role' => 'required|string|in:Admin,Employee', 
+            'role_id' => 'required|exists:roles,id', 
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'required|date',
             'cin' => 'required|string|max:20',
+        
         ]);
         
         if ($validator->fails()) {
@@ -62,7 +63,7 @@ class UserController extends Controller
         }
         
         try {
-            $role = Role::where('name', $request->role)->first();
+            $role = Role::where('id', $request->role)->first();
             if (!$role) {
                 return response()->json([
                     'status' => 'error',

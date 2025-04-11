@@ -7,7 +7,7 @@ class RegisterRequest extends FormRequest
 {
     public function authorize()
     {
-        return true; // Autorise la validation pour tous les utilisateurs
+        return true; 
     }
 
     public function rules()

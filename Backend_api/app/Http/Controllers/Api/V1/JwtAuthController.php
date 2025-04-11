@@ -66,7 +66,7 @@ class JwtAuthController extends Controller
         $input = $request->validated();
 
         $input['password'] = bcrypt($input['password']);
-        $input['role'] = $input['role'] ?? 'citizen';
+        $input['role_id'] = $input['role_id'] ?? 3;
 
         unset($input['c_password']);
 
