@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\V1\JwtAuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\UserController;
 
 
 
@@ -16,7 +15,9 @@ Route::middleware('jwtauth')->group(function () {
     Route::post('logout', [JwtAuthController::class, 'logout']);
     Route::post('refresh', [JwtAuthController::class, 'refresh']);
     Route::put('profile', [JwtAuthController::class, 'updateProfile']);
-    
+
 });
 
-Route::get("all_user",[UserController::class,"index"]);
+
+Route::get('users',[\App\Http\Controllers\Api\V1\UserController::class, 'index']);
+
