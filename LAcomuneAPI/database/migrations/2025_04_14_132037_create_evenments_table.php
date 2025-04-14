@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->dateTime('date');
             $table->string('location')->nullable();
-            $table->foreignId('category_id')->constrained();
             $table->boolean('is_published')->default(false);
             $table->timestamps();
         });

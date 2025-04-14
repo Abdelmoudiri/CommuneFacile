@@ -10,5 +10,13 @@ class Evenment extends Model
     /** @use HasFactory<\Database\Factories\EvenmentFactory> */
     use HasFactory;
 
+    protected $fillable=[
+        'title',
+        'description',
+        'date',
+        'location',
+        'is_published',
+    ];
     
+
 }
