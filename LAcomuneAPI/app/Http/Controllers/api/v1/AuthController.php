@@ -70,9 +70,7 @@ class AuthController extends Controller
     public function me()
     {
         $user = Auth::guard('api')->user();
-        
-        // Load role and profile relationships
-        $user->load(['role', 'profile']);
+        $user->load('profile');
         
         return response()->json([
             'status' => 'success',

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('address', 255);
             $table->string('phone', 20);
             $table->date('date_of_birth');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('cin', 20);
             $table->timestamps();
         });
