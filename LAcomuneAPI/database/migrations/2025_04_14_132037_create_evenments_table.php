@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->dateTime('date');
             $table->string('location')->nullable();
+            $table->string('image')->default("no image.png");
             $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
