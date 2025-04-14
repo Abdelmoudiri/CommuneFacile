@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Contollers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Evenment;
@@ -12,7 +12,8 @@ class EvenmentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Evenment::with('category', 'creator');
+        $query = Evenment::get();
+        dd($query);
         
         // Citizens can only see published events
         if (Auth::user()->hasRole('Citizen')) {
