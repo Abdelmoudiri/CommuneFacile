@@ -7,8 +7,9 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
@@ -44,71 +45,56 @@ class AuthController extends Controller
             'cin' => $request->cin,
         ]);
 
-        return response()->json(['status' => 'success', 'message' => 'User registered successfully'], 201);
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User registered successfully',
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
+        ], 201);
     }
 
     //login function
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
-        }
-
-        if (!$token = Auth::guard('api')->attempt($request->only('email', 'password'))) {
-            return response()->json(['status' => 'error', 'message' => 'Invalid credentials'], 401);
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
         }
 
         return $this->respondWithToken($token);
     }
 
- 
     public function me()
     {
-        $user = Auth::guard('api')->user();
-        $user->load('profile');
-        
-        return response()->json([
-            'status' => 'success',
-            'data' => $user
-        ]);
+        $user = JWTAuth::parseToken()->authenticate();
+
+        return response()->json(['user' => $user]);
     }
-
-
-    public function refresh()
-    {
-        return $this->respondWithToken(Auth::guard('api')->refresh());
-    }
-
 
     public function logout()
     {
-        Auth::guard('api')->logout();
-
-        return response()->json(['status' => 'success', 'message' => 'Logged out successfully']);
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Successfully logged out']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to logout, please try again'], 500);
+        }
     }
 
- 
     protected function respondWithToken($token)
     {
-        $user = Auth::guard('api')->user();
-        $user->load('role');
-        
         return response()->json([
-            'status' => 'success',
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60,
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role->name,
-            ]
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
     }
 }
