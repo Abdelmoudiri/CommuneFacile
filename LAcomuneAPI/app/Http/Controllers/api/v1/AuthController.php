@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Profile;
-use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -27,14 +26,44 @@ class AuthController extends Controller
             'cin' => 'required|string|max:20',
         ]);
 
-        return "succed";
-  
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $profile = Profile::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'cin' => $request->cin,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'User registered successfully'], 201);
     }
 
     //login function
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
+        }
+
+        if (!$token = Auth::guard('api')->attempt($request->only('email', 'password'))) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid credentials'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 
  
@@ -60,7 +89,9 @@ class AuthController extends Controller
 
     public function logout()
     {
- 
+        Auth::guard('api')->logout();
+
+        return response()->json(['status' => 'success', 'message' => 'Logged out successfully']);
     }
 
  
