@@ -34,19 +34,12 @@ return [
     | Supported: "session"
     |
     */
-
- 'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
+'guards' => [
     'api' => [
-        'driver' => 'token',
+        'driver' => 'jwt',
         'provider' => 'users',
-        'hash' => true, 
     ],
 ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers

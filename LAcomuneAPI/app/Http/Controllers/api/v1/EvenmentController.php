@@ -12,27 +12,24 @@ class EvenmentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Evenment::get();
-        dd($query);
-        
+        $query = Evenment::query();
+
         // Citizens can only see published events
-        if (Auth::user()->hasRole('Citizen')) {
+        if (Auth::user()->isCitizen()) {
             $query->where('is_published', true);
         }
-        
-   
-        
+
         // Filter by upcoming status if requested
         if ($request->has('upcoming') && $request->upcoming == 'true') {
             $query->where('date', '>=', now())->orderBy('date', 'asc');
         } else {
             $query->orderBy('date', 'desc');
         }
-        
+
         // Apply pagination
         $perPage = $request->get('per_page', 10);
         $events = $query->paginate($perPage);
-        
+
         return response()->json([
             'status' => 'success',
             'data' => $events
