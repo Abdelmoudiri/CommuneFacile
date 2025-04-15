@@ -4,6 +4,8 @@ use App\Http\Contollers\api\v1\ProfileController;
 use App\Http\Controllers\api\V1\AuthController;
 use App\Http\Controllers\api\v1\EvenmentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\JwtMiddleware;
+
 // auth
 Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login']);

@@ -14,19 +14,16 @@ class EvenmentController extends Controller
     {
         $query = Evenment::query();
 
-        // Citizens can only see published events
         if (Auth::user()->isCitizen()) {
             $query->where('is_published', true);
         }
 
-        // Filter by upcoming status if requested
         if ($request->has('upcoming') && $request->upcoming == 'true') {
             $query->where('date', '>=', now())->orderBy('date', 'asc');
         } else {
             $query->orderBy('date', 'desc');
         }
 
-        // Apply pagination
         $perPage = $request->get('per_page', 10);
         $events = $query->paginate($perPage);
 
@@ -64,51 +61,53 @@ class EvenmentController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
+        return "nnnnnnnnnn";
+        // dd($request);
+
+        // $user = Auth::user();
         
-        if (!$user->hasRole('Admin') && !$user->hasRole('Employee')) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized. Only administrators and employees can create events'
-            ], 403);
-        }
+        // if (!$user->hasRole('Admin') && !$user->hasRole('Employee')) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Unauthorized. Only administrators and employees can create events'
+        //     ], 403);
+        // }
         
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'date' => 'required|date|after_or_equal:today',
-            'location' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'is_published' => 'boolean'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'title' => 'required|string|max:255',
+        //     'description' => 'required|string',
+        //     'date' => 'required|date|after_or_equal:today',
+        //     'location' => 'required|string|max:255',
+        //     'is_published' => 'boolean'
+        // ]);
         
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Validation failed',
+        //         'errors' => $validator->errors()
+        //     ], 422);
+        // }
         
-        // Create event
-        $event = Evenment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'date' => $request->date,
-            'location' => $request->location,
-            'category_id' => $request->category_id,
-            'is_published' => $request->has('is_published') ? $request->is_published : false,
-            'created_by' => $user->id
-        ]);
+        // // Create event
+        // $event = Evenment::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'date' => $request->date,
+        //     'location' => $request->location,
+        //     'category_id' => $request->category_id,
+        //     'is_published' => $request->has('is_published') ? $request->is_published : false,
+        //     'created_by' => $user->id
+        // ]);
         
-        // Load relationships
-        $event->load('category', 'creator');
+        // // Load relationships
+        // $event->load('category', 'creator');
         
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Event created successfully',
-            'data' => $event
-        ], 201);
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Event created successfully',
+        //     'data' => $event
+        // ], 201);
     }
 
     public function update(Request $request, $id)
