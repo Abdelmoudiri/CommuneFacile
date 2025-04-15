@@ -12,6 +12,7 @@ class EvenmentController extends Controller
 {
     public function index(Request $request)
     {
+        // dd($request);
         $query = Evenment::query();
 
         if (Auth::user()->isCitizen()) {
@@ -61,53 +62,46 @@ class EvenmentController extends Controller
 
     public function store(Request $request)
     {
-        return "nnnnnnnnnn";
-        // dd($request);
-
-        // $user = Auth::user();
+        $user = Auth::user();
+       if (!$user->isAdmin() && !$user->isEmployee()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. Only administrators and employees can create events'
+            ], 403);
+        }
         
-        // if (!$user->hasRole('Admin') && !$user->hasRole('Employee')) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Unauthorized. Only administrators and employees can create events'
-        //     ], 403);
-        // }
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'date' => 'required|date|after_or_equal:today',
+            'location' => 'required|string|max:255',
+            'is_published' => 'boolean'
+        ]);
         
-        // $validator = Validator::make($request->all(), [
-        //     'title' => 'required|string|max:255',
-        //     'description' => 'required|string',
-        //     'date' => 'required|date|after_or_equal:today',
-        //     'location' => 'required|string|max:255',
-        //     'is_published' => 'boolean'
-        // ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
         
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Validation failed',
-        //         'errors' => $validator->errors()
-        //     ], 422);
-        // }
+        $event = Evenment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'date' => $request->date,
+            'location' => $request->location,
+            'category_id' => $request->category_id,
+            'is_published' => $request->has('is_published') ? $request->is_published : false,
+            'created_by' => $user->id
+        ]);
         
-        // // Create event
-        // $event = Evenment::create([
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        //     'date' => $request->date,
-        //     'location' => $request->location,
-        //     'category_id' => $request->category_id,
-        //     'is_published' => $request->has('is_published') ? $request->is_published : false,
-        //     'created_by' => $user->id
-        // ]);
         
-        // // Load relationships
-        // $event->load('category', 'creator');
-        
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'Event created successfully',
-        //     'data' => $event
-        // ], 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Event created successfully',
+            'data' => $event
+        ], 201);
     }
 
     public function update(Request $request, $id)
