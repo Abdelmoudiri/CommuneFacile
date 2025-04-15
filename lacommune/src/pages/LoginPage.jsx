@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import {login} from '../services/apiService';
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ajouter la logique de connexion ici
-    console.log('Email:', email, 'Password:', password);
+    try {
+      const response = await login({ email, password });
+      console.log('Connexion réussie:', response);
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error);
+    }
   };
 
   return (
