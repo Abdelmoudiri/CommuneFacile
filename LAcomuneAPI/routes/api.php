@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AuthController;
-use App\Http\Contollers\Api\v1\ProfileController;
-use App\Http\Contollers\Api\v1\EvenmentController;
+use App\Http\Contollers\api\v1\ProfileController;
+use App\Http\Controllers\api\V1\AuthController;
+use App\Http\Controllers\api\v1\EvenmentController;
 use Illuminate\Support\Facades\Route;
 // auth
 Route::post('register',[AuthController::class,'register']);
