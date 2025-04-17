@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   const carouselSlides = [
     {
-      image: "/images/slide1.jpg",
+      image: "../asset/images/slide1.jpg",
       alt: "Conference presentation",
     },
     {

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const Carousel = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Auto-advance the carousel
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((current) => (current === slides.length - 1 ? 0 : current + 1));
@@ -26,7 +25,7 @@ const Carousel = ({ slides }) => {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-2xl">
-      {/* Images container with sliding effect */}
+      
       <div 
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -34,7 +33,7 @@ const Carousel = ({ slides }) => {
         {slides.map((slide, index) => (
           <div key={index} className="min-w-full">
             <img 
-              src={slide.image} 
+              src={new URL(`../assets/images/${slide.image}`, import.meta.url).href} 
               alt={slide.alt || `Slide ${index + 1}`} 
               className="w-full h-96 object-cover"
             />
@@ -42,7 +41,6 @@ const Carousel = ({ slides }) => {
         ))}
       </div>
 
-      {/* Navigation arrows */}
       <button 
         onClick={goToPrevSlide}
         className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 rounded-full p-2 text-white transition"
@@ -63,7 +61,6 @@ const Carousel = ({ slides }) => {
         </svg>
       </button>
 
-      {/* Indicators */}
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {slides.map((_, index) => (
           <button
