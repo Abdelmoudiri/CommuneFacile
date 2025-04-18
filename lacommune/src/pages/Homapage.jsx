@@ -6,27 +6,27 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const carouselSlides = [
-    {
-      image: "../asset/images/slide1.jpg",
-      alt: "Conference presentation",
-    },
-    {
-      image: "/images/slide2.jpg",
-      alt: "Portrait with Moroccan flag",
-    },
-    {
-      image: "/images/slide3.jpg",
-      alt: "Speech at podium",
-    },
-    {
-      image: "/images/slide4.jpg",
-      alt: "Meeting room",
-    },
-    {
-      image: "/images/slide5.jpg",
-      alt: "Mountain landscape",
-    },
-  ];
+        {
+          image: "slide1.png", 
+          alt: "Conference presentation"
+        },
+        {
+          image: "slide2.png",
+          alt: "Portrait with Moroccan flag"
+        },
+        {
+          image: "slide3.png",
+          alt: "Speech at podium"
+        },
+        {
+          image: "slide4.png",
+          alt: "Meeting room"
+        },
+        {
+          image: "slide5.png",
+          alt: "Mountain landscape"
+        }
+      ];
 
   return (
     <div className="flex flex-col min-h-screen">

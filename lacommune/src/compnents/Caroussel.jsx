@@ -33,9 +33,9 @@ const Carousel = ({ slides }) => {
         {slides.map((slide, index) => (
           <div key={index} className="min-w-full">
             <img 
-              src={new URL(`../assets/images/${slide.image}`, import.meta.url).href} 
+              src={`/images/${slide.image}`} 
               alt={slide.alt || `Slide ${index + 1}`} 
-              className="w-full h-96 object-cover"
+              className="w-full h-96 object-contain"
             />
           </div>
         ))}
