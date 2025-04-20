@@ -542,7 +542,9 @@ class ComposerStaticInit88970a0117c062eed55fa8728fc43833
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
+        'App\\Http\\Controllers\\api\\v1\\EvenmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/v1/EvenmentController.php',
+        'App\\Http\\Middleware\\JwtMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/JwtMiddleware.php',
+        'App\\Models\\Evenment' => __DIR__ . '/../..' . '/app/Models/Evenment.php',
         'App\\Models\\Profile' => __DIR__ . '/../..' . '/app/Models/Profile.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -663,9 +665,11 @@ class ComposerStaticInit88970a0117c062eed55fa8728fc43833
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+        'Database\\Factories\\EvenmentFactory' => __DIR__ . '/../..' . '/database/factories/EvenmentFactory.php',
         'Database\\Factories\\ProfileFactory' => __DIR__ . '/../..' . '/database/factories/ProfileFactory.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\EvenmentSeeder' => __DIR__ . '/../..' . '/database/seeders/EvenmentSeeder.php',
         'Database\\Seeders\\ProfileSeeder' => __DIR__ . '/../..' . '/database/seeders/ProfileSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',

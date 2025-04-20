@@ -1816,7 +1816,7 @@
                     ]
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Laravel\\Sanctum\\": "src/"
@@ -2008,7 +2008,7 @@
             },
             "time": "2022-04-19T19:34:17+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\Clock\\": "src"
@@ -2082,7 +2082,7 @@
                     "dev-master": "4.0-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Lcobucci\\JWT\\": "src"
@@ -5901,7 +5901,7 @@
             },
             "time": "2022-11-25T16:15:06+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "StellaMaris\\Clock\\": "src"
@@ -8476,7 +8476,7 @@
                     "dev-develop": "1.0-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Tymon\\JWTAuth\\": "src/"
