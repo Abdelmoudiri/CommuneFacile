@@ -19,18 +19,13 @@ use App\Customs\Services\EmailVerificationService;
 
 class JwtAuthController extends Controller
 {
-    
 
-    public function __construct(private  EmailVerificationService $emailVerificationService)
-    {}
-    /**
-     * Send success response with data
-     *
-     * @param mixed $data
-     * @param string $message
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    public function __construct(private EmailVerificationService $emailVerificationService)
+    {
+    }
+
+    // envoyer Response
     public function sendResponse($data, $message, $status = 200)
     {
         $response = [
@@ -40,14 +35,7 @@ class JwtAuthController extends Controller
         return response()->json($response, $status);
     }
 
-    /**
-     * Send error response
-     *
-     * @param mixed $errorData
-     * @param string $message
-     * @param int $status
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // envoyer error response
     public function sendError($errorData, $message, $status = 500)
     {
         $response = [];
@@ -58,12 +46,7 @@ class JwtAuthController extends Controller
         return response()->json($response, $status);
     }
 
-    /**
-     * Register a new user
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+    //   Register
     public function register(RegisterRequest $request)
     {
         $input = $request->validated();
@@ -86,12 +69,8 @@ class JwtAuthController extends Controller
 
         return $this->sendResponse($success, 'User registered successfully', 201);
     }
-    /**
-     * User login
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    // /login
 
     public function login(LogingRequest $request)
     {
@@ -116,11 +95,8 @@ class JwtAuthController extends Controller
         return $this->sendResponse($success, 'Successful login', 200);
     }
 
-    /**
-     * Get authenticated user
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    // get un user current avec profile et son role
     public function getUser()
     {
         try {
@@ -128,6 +104,8 @@ class JwtAuthController extends Controller
             if (!$user) {
                 return $this->sendError([], "User not found", 401);
             }
+            $user->load(['role', 'profile']);
+
         } catch (TokenExpiredException $e) {
             return $this->sendError([], 'Token expired', 401);
         } catch (TokenInvalidException $e) {
@@ -139,11 +117,7 @@ class JwtAuthController extends Controller
         return $this->sendResponse($user, "User data retrieved", 200);
     }
 
-    /**
-     * Logout user (invalidate token)
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // logout
     public function logout()
     {
         try {
@@ -154,11 +128,7 @@ class JwtAuthController extends Controller
         }
     }
 
-    /**
-     * Refresh token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // refrech le token
     public function refresh()
     {
         try {
@@ -184,7 +154,7 @@ class JwtAuthController extends Controller
         }
     }
 
-   
+
     public function updateProfile(Request $request)
     {
         try {
