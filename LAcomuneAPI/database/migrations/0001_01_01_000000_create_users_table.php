@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'employee', 'citizen'])->default('citizen');
             $table->boolean('is_active')->default(true);
+            $table->string('address', 255);
+            $table->string('phone', 20)->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('cin', 20)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

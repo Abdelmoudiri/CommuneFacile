@@ -22,6 +22,11 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'address',
+        'phone',
+        'date_of_birth',
+        'cin',
+        'role'
     ];
 
     /**
@@ -45,11 +50,6 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
     }
 
     public function isAdmin()
