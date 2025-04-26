@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../services/apiService';
-import Header from '../../compnents/header';
-import Footer from '../../compnents/Footer';
+import Header from '../../components/header';
+import Footer from '../../components/Footer';
 
 const EmployeeManagement = () => {
   const navigate = useNavigate();
