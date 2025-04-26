@@ -25,35 +25,44 @@ class AuthController extends Controller
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'required|date',
             'cin' => 'required|string|max:20',
+            'role' => 'sometimes|string|in:employee,citizen'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
         }
 
+        // Get authenticated user if exists
+        $authUser = auth()->user();
+        
+        // Determine the role
+        $role = 'citizen'; // default role
+        if ($authUser && $authUser->isAdmin() && $request->has('role')) {
+            $role = $request->role;
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
-
-        $profile = Profile::create([
-            'user_id' => $user->id,
             'address' => $request->address,
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'cin' => $request->cin,
+            'role' => $role
         ]);
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User registered successfully',
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60
-        ], 201);
+        return response()->json(
+            [
+                'message' => 'User created successfully',
+                'user' => $user,
+                'token' => $token,
+                'expires_in' => JWTAuth::factory()->getTTL() * 60
+            ],
+            201
+        );
     }
 
     //login function

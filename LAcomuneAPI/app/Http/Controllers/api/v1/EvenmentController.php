@@ -13,21 +13,22 @@ class EvenmentController extends Controller
     public function index(Request $request)
     {
         // dd($request);
-        $query = Evenment::query();
+        // $query = Evenment::query();
 
-        if (Auth::user()->isCitizen()) {
-            $query->where('is_published', true);
-        }
+        // if (Auth::user()->isCitizen()) {
+        //     $query->where('is_published', true);
+        // }
 
-        if ($request->has('upcoming') && $request->upcoming == 'true') {
-            $query->where('date', '>=', now())->orderBy('date', 'asc');
-        } else {
-            $query->orderBy('date', 'desc');
-        }
+        // if ($request->has('upcoming') && $request->upcoming == 'true') {
+        //     $query->where('date', '>=', now())->orderBy('date', 'asc');
+        // } else {
+        //     $query->orderBy('date', 'desc');
+        // }
 
-        $perPage = $request->get('per_page', 10);
-        $events = $query->paginate($perPage);
+        // $perPage = $request->get('per_page', 10);
+        // $events = $query->paginate($perPage);
 
+        $events=Evenment::all();
         return response()->json([
             'status' => 'success',
             'data' => $events
