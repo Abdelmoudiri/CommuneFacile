@@ -12,22 +12,7 @@ class EvenmentController extends Controller
 {
     public function index(Request $request)
     {
-        // dd($request);
-        // $query = Evenment::query();
-
-        // if (Auth::user()->isCitizen()) {
-        //     $query->where('is_published', true);
-        // }
-
-        // if ($request->has('upcoming') && $request->upcoming == 'true') {
-        //     $query->where('date', '>=', now())->orderBy('date', 'asc');
-        // } else {
-        //     $query->orderBy('date', 'desc');
-        // }
-
-        // $perPage = $request->get('per_page', 10);
-        // $events = $query->paginate($perPage);
-
+        
         $events=Evenment::all();
         return response()->json([
             'status' => 'success',
@@ -219,7 +204,6 @@ class EvenmentController extends Controller
             ], 404);
         }
         
-        // Toggle is_published
         $event->is_published = !$event->is_published;
         $event->save();
         

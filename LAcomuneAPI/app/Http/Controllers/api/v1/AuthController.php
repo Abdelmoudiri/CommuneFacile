@@ -32,11 +32,9 @@ class AuthController extends Controller
             return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
         }
 
-        // Get authenticated user if exists
         $authUser = auth()->user();
         
-        // Determine the role
-        $role = 'citizen'; // default role
+        $role = 'citizen'; 
         if ($authUser && $authUser->isAdmin() && $request->has('role')) {
             $role = $request->role;
         }

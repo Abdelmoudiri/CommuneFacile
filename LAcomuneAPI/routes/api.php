@@ -9,7 +9,7 @@ use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Storage;
 
 // Public routes
-Route::post('register', [AuthController::class, 'register']); // This is for citizen registration
+Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 // Debug route for storage (temporary)
@@ -35,7 +35,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     // Admin routes
     Route::middleware(['admin'])->group(function () {
-        Route::post('admin/register', [AuthController::class, 'register']); // This is for employee registration
+        Route::post('admin/register', [AuthController::class, 'register']); 
         Route::get('users', [UserController::class, 'index']);
         Route::get('users/{id}', [UserController::class, 'show']);
         Route::put('users/{id}', [UserController::class, 'update']);

@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DocumentRequestController extends Controller
 {
-    /**
-     * List all document requests
-     * For employees: all requests
-     * For citizens: only their own requests
-     */
     public function index()
     {
         $user = Auth::user();
@@ -36,9 +31,7 @@ class DocumentRequestController extends Controller
         ]);
     }
 
-    /**
-     * Store a new document request
-     */
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -68,9 +61,7 @@ class DocumentRequestController extends Controller
         ], 201);
     }
 
-    /**
-     * Show a specific document request
-     */
+   
     public function show($id)
     {
         $user = Auth::user();
@@ -96,9 +87,7 @@ class DocumentRequestController extends Controller
         ]);
     }
 
-    /**
-     * Process a document request (for employees only)
-     */
+   
     public function process(Request $request, $id)
     {
         try {
@@ -128,7 +117,6 @@ class DocumentRequestController extends Controller
                 ], 422);
             }
 
-            // Handle file upload if provided
             if ($request->hasFile('document_file')) {
                 $file = $request->file('document_file');
                 $fileName = time() . '_' . Str::slug($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
@@ -157,9 +145,7 @@ class DocumentRequestController extends Controller
         }
     }
 
-    /**
-     * Download the document file.
-     */
+  
     public function downloadDocument($id)
     {
         try {
@@ -176,7 +162,6 @@ class DocumentRequestController extends Controller
                 'user_id' => $documentRequest->user_id
             ]);
             
-            // Authorization check
             if ($user->isCitizen() && $documentRequest->user_id !== $user->id) {
                 Log::warning('Unauthorized access attempt', [
                     'user_id' => $user->id,
@@ -188,7 +173,6 @@ class DocumentRequestController extends Controller
                 ], 403);
             }
 
-            // Status and file existence check
             if ($documentRequest->status !== 'completed') {
                 Log::warning('Attempted to download incomplete document', [
                     'status' => $documentRequest->status
@@ -210,7 +194,6 @@ class DocumentRequestController extends Controller
             $filePath = $documentRequest->document_file;
             Log::info('Checking file existence', ['path' => $filePath]);
 
-            // File existence check
             if (!Storage::disk('public')->exists($filePath)) {
                 Log::error('File not found on disk', [
                     'path' => $filePath,
@@ -222,7 +205,6 @@ class DocumentRequestController extends Controller
                 ], 404);
             }
 
-            // Generate filename
             $extension = pathinfo($filePath, PATHINFO_EXTENSION) ?: 'pdf';
             $documentType = Str::slug($documentRequest->document_type);
             $timestamp = now()->format('Y-m-d');
@@ -234,7 +216,6 @@ class DocumentRequestController extends Controller
                 'mime_type' => Storage::disk('public')->mimeType($filePath)
             ]);
 
-            // Prepare download response
             $fullPath = Storage::disk('public')->path($filePath);
             $response = new BinaryFileResponse($fullPath);
             $response->headers->set('Content-Type', Storage::disk('public')->mimeType($filePath));
@@ -258,9 +239,7 @@ class DocumentRequestController extends Controller
         }
     }
 
-    /**
-     * Delete a document request (only allowed for pending requests)
-     */
+  
     public function destroy($id)
     {
         $user = Auth::user();
