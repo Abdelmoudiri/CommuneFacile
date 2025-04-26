@@ -52,7 +52,7 @@ const Statistics = () => {
       setStats(statistics);
       setLoading(false);
     } catch (err) {
-      setError('Erreur lors du chargement des statistiques');
+      setError('Erreur lors du chargement des statistiques',err);
       setLoading(false);
     }
   };

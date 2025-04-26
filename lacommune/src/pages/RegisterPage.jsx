@@ -25,7 +25,6 @@ const RegisterPage = () => {
       ...prev,
       [name]: value
     }));
-    // Effacer les erreurs quand l'utilisateur commence à taper
     setError('');
   };
 
@@ -42,24 +41,20 @@ const RegisterPage = () => {
       cin: 'CIN'
     };
 
-    // Vérifier les champs vides
     Object.entries(requiredFields).forEach(([field, label]) => {
       if (!formData[field]) {
         errors.push(`Le champ ${label} est requis`);
       }
     });
 
-    // Validation spécifique pour l'email
     if (formData.email && !formData.email.includes('@')) {
       errors.push('Veuillez entrer une adresse email valide');
     }
 
-    // Validation du mot de passe
     if (formData.password && formData.password.length < 6) {
       errors.push('Le mot de passe doit contenir au moins 6 caractères');
     }
 
-    // Validation de la confirmation du mot de passe
     if (formData.password !== formData.password_confirmation) {
       errors.push('Les mots de passe ne correspondent pas');
     }
@@ -71,7 +66,6 @@ const RegisterPage = () => {
     e.preventDefault();
     setError('');
     
-    // Validation côté client
     const validationErrors = validateForm();
     if (validationErrors.length > 0) {
       setError(validationErrors.join('\n'));

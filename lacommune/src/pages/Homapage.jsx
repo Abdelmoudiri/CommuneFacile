@@ -1,39 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Carousel from "../components/Caroussel";
-import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const carouselSlides = [
     {
-      image: "slide1.png",
-      alt: "Conference presentation"
+      id: 1,
+      image: "/images/slide1.png",
+      alt: "Slide 1"
     },
     {
-      image: "slide2.png",
-      alt: "Portrait with Moroccan flag"
+      id: 2,
+      image: "/images/slide2.png",
+      alt: "Slide 2"
     },
     {
-      image: "slide3.png",
-      alt: "Speech at podium"
-    },
-    {
-      image: "slide4.png",
-      alt: "Meeting room"
-    },
-    {
-      image: "slide5.png",
-      alt: "Mountain landscape"
+      id: 3,
+      image: "/images/slide3.png", 
+      alt: "Slide 3"
     }
   ];
 
-  // Liste des services disponibles
   const availableServices = [
     {
       title: "Extrait de naissance",
-      description: "Demandez un extrait de naissance en ligne",
-      icon: "📄",
+      description: "Obtenez votre extrait de naissance en ligne",
+      icon: "📋",
       path: "/citoyen/demandes/nouveau",
     },
     {
@@ -56,7 +50,6 @@ const HomePage = () => {
     },
   ];
 
-  // les evenements
   const featuredEvents = [
     {
       id: "1",
@@ -74,7 +67,6 @@ const HomePage = () => {
     },
   ];
 
-  // les annonces
   const featuredAnnouncements = [
     {
       id: "1",
@@ -97,7 +89,6 @@ const HomePage = () => {
       <Header />
 
       <main className="flex-grow w-full">
-        {/* Hero Section with Carousel */}
         <section className="w-full py-10 bg-gradient-to-r from-red-700 to-red-900">
           <div className="w-full px-4 max-w-[2000px] mx-auto">
             <div className="text-white text-center mb-8">
@@ -126,7 +117,6 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Services Section */}
         <section className="w-full py-16">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-6">
@@ -153,7 +143,6 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Events Section */}
         <section className="w-full py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-6">
@@ -189,7 +178,6 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Job Announcements Section */}
         <section className="w-full py-16">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-6">

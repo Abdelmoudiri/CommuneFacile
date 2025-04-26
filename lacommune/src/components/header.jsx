@@ -7,7 +7,6 @@ const Header = () => {
   const user = getUser();
   const isAuthenticated = checkAuth();
 
-  // Fonction pour obtenir le lien du dashboard en fonction du rôle
   const getDashboardLink = () => {
     if (!user || !user.role) {
       return '/';
