@@ -11,8 +11,14 @@ import Testimonials from './pages/Testimonials';
 import AdminDashboard from './pages/Admin/Dashboard';
 import EmployeeManagement from './pages/Admin/EmployeeManagement';
 import UserManagement from './pages/Admin/UserManagement';
+import EventManagement from './pages/Admin/EventManagement';
 import CitizenDashboard from './pages/Citizen/Dashboard';
+import Profile from './pages/Citizen/Profile';
+import Events from './pages/Citizen/Events';
 import EmployeeDashboard from './pages/Employee/Dashboard';
+import DocumentRequests from './pages/Citizen/DocumentRequests';
+import NewDocumentRequest from './pages/Citizen/NewDocumentRequest';
+import DocumentRequestsManagement from './pages/Employee/DocumentRequestsManagement';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -53,10 +59,18 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        {/* Routes Employé et Citoyen */}
         <Route
-          path="/citizen/*"
+          path="/admin/events"
+          element={
+            <ProtectedRoute allowedRole="admin">
+              <EventManagement />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Routes Citoyen */}
+        <Route
+          path="/citizen"
           element={
             <ProtectedRoute allowedRole="citizen">
               <CitizenDashboard />
@@ -64,10 +78,52 @@ function App() {
           }
         />
         <Route
-          path="/employee/*"
+          path="/citizen/requests"
+          element={
+            <ProtectedRoute allowedRole="citizen">
+              <DocumentRequests />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/citizen/new-request"
+          element={
+            <ProtectedRoute allowedRole="citizen">
+              <NewDocumentRequest />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/citizen/profile"
+          element={
+            <ProtectedRoute allowedRole="citizen">
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/citizen/events"
+          element={
+            <ProtectedRoute allowedRole="citizen">
+              <Events />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Routes Employé */}
+        <Route
+          path="/employee"
           element={
             <ProtectedRoute allowedRole="employee">
               <EmployeeDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee/document-requests"
+          element={
+            <ProtectedRoute allowedRole="employee">
+              <DocumentRequestsManagement />
             </ProtectedRoute>
           }
         />
