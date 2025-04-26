@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../compnents/header';
-import Footer from '../../compnents/Footer';
+import Header from '../../components/header';
+import Footer from '../../components/Footer';
 import { getUsers, deleteUser, toggleUserStatus } from '../../services/apiService';
 
 const UserManagement = () => {

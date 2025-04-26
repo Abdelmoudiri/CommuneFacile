@@ -5,55 +5,49 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setLoading(true);
 
     try {
-      const response = await login({ email, password });
-      console.log('Réponse de login:', response);
-      
-      if (!response.access_token || !response.user || !response.user.role) {
-        throw new Error('Données de connexion incomplètes');
-      }
-
+      const response = await login(formData);
       localStorage.setItem('token', response.access_token);
       localStorage.setItem('user', JSON.stringify(response.user));
       
-      console.log('Role utilisateur:', response.user.role);
-
-      //ndir  Redirection  hassab le role
-      const userRole = response.user.role.toLowerCase();
-      switch (userRole) {
+      // Rediriger selon le rôle
+      switch(response.user.role) {
         case 'admin':
-          console.log('Redirection vers /admin');
           navigate('/admin');
           break;
         case 'employee':
-          console.log('Redirection vers /employee');
           navigate('/employee');
           break;
         case 'citizen':
-          console.log('Redirection vers /citizen');
           navigate('/citizen');
           break;
         default:
-          console.log('Redirection vers /');
           navigate('/');
-          break;
       }
-    } catch (error) {
-      console.error('Erreur complète:', error); // Log de débogage détaillé
-      setError(error.response?.data?.error || error.message || "Une erreur s'est produite lors de la connexion");
+    } catch (err) {
+      setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -75,18 +69,18 @@ const LoginPage = () => {
             )}
             <div className="space-y-4">
               <div>
-                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Adresse email
                 </label>
                 <input
-                  id="email-address"
+                  id="email"
                   name="email"
                   type="email"
                   required
                   className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Votre adresse email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -100,8 +94,8 @@ const LoginPage = () => {
                   required
                   className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Votre mot de passe"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -109,10 +103,10 @@ const LoginPage = () => {
             <div>
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={loading}
                 className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
               >
-                {isLoading ? (
+                {loading ? (
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                     <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -120,7 +114,7 @@ const LoginPage = () => {
                     </svg>
                   </span>
                 ) : null}
-                {isLoading ? 'Connexion...' : 'Se connecter'}
+                {loading ? 'Connexion...' : 'Se connecter'}
               </button>
             </div>
           </form>
