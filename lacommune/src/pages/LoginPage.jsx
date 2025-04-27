@@ -29,7 +29,7 @@ const LoginPage = () => {
       
       console.log('Role utilisateur:', response.user.role);
 
-      // Redirection basée sur le rôle (conversion en minuscules pour la comparaison)
+      //ndir  Redirection  hassab le role
       const userRole = response.user.role.toLowerCase();
       switch (userRole) {
         case 'admin':
