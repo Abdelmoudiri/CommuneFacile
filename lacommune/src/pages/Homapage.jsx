@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../compnents/Header";
-import Footer from "../compnents/Footer";
-import Carousel from "../compnents/Caroussel";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Carousel from "../components/Caroussel";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
@@ -56,7 +56,7 @@ const HomePage = () => {
     },
   ];
 
-  // Données fictives pour les événements
+  // les evenements
   const featuredEvents = [
     {
       id: "1",
@@ -74,7 +74,7 @@ const HomePage = () => {
     },
   ];
 
-  // Données fictives pour les annonces
+  // les annonces
   const featuredAnnouncements = [
     {
       id: "1",

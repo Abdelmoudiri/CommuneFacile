@@ -3,42 +3,82 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
 const Header = () => {
+  const userStr = localStorage.getItem('user');
+  const user = userStr ? JSON.parse(userStr) : null;
+  const isAuthenticated = !!localStorage.getItem('token');
+
+  // Fonction katjib lien mn url men role dyal user
+  const getDashboardLink = () => {
+    if (!user) return '/';
+    
+    switch (user.role.toLowerCase()) {
+      case 'admin':
+        return '/admin';
+      case 'employee':
+        return '/employee';
+      case 'citizen':
+        return '/citizen';
+      default:
+        return '/';
+    }
+  };
+
   return (
-    <header className="bg-white py-4 px-6 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            <Logo />
-          </Link>
-        </div>
-        
-        <nav className="hidden md:flex space-x-8">
-          <Link to="/" className="text-gray-800 hover:text-blue-600 font-medium">
-            Home
-          </Link>
-          <Link to="/about" className="text-gray-800 hover:text-blue-600 font-medium">
-            About us
-          </Link>
-          <div className="relative group">
-            <Link to="/services" className="text-gray-800 hover:text-blue-600 font-medium flex items-center">
-              Services
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+    <header className="w-full bg-white py-4 shadow-md">
+      <div className="w-full px-6">
+        <div className="max-w-[2000px] mx-auto flex justify-between items-center">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <Logo />
             </Link>
           </div>
-          <Link to="/testimonials" className="text-gray-800 hover:text-blue-600 font-medium">
-            Testimonials
-          </Link>
-        </nav>
-        
-        <div className="flex space-x-4">
-          <Link to="/register" className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-800 transition">
-            Register
-          </Link>
-          <Link to="/signin" className="border border-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-100 transition">
-            Sign in
-          </Link>
+          
+          <nav className="hidden md:flex space-x-8">
+            <Link to="/" className="text-gray-800 hover:text-red-600 font-medium">
+              Accueil
+            </Link>
+            <Link to="/about" className="text-gray-800 hover:text-red-600 font-medium">
+              À propos
+            </Link>
+            <Link to="/services" className="text-gray-800 hover:text-red-600 font-medium">
+              Services
+            </Link>
+            <Link to="/evenements" className="text-gray-800 hover:text-red-600 font-medium">
+              Événements
+            </Link>
+            <Link to="/testimonials" className="text-gray-800 hover:text-red-600 font-medium">
+              Témoignages
+            </Link>
+            {isAuthenticated && (
+              <Link to={getDashboardLink()} className="text-gray-800 hover:text-red-600 font-medium">
+                Dashboard
+              </Link>
+            )}
+          </nav>
+          
+          <div className="flex space-x-4">
+            {!isAuthenticated ? (
+              <>
+                <Link to="/register" className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition">
+                  S'inscrire
+                </Link>
+                <Link to="/login" className="border border-red-700 text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition">
+                  Se connecter
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  localStorage.removeItem('user');
+                }}
+                className="border border-red-700 text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+              >
+                Se déconnecter
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>
