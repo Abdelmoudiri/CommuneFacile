@@ -22,6 +22,18 @@ export const register = async (userData) => {
   }
 };
 
+export const registr=async(userdata)=>
+{
+  try
+  {
+    const resonse=await apiClient.post('/register',userdata);
+    return resonse.data;
+  }catch (error){
+    console.error("erreur lors de l inscription :",error);
+    throw error;
+  }
+}
+
 //recuperer tous les evenments
 export const fetchEvents = async () => {
   try {

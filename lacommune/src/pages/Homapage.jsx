@@ -44,7 +44,7 @@ const HomePage = () => {
             <div className="flex flex-col md:flex-row items-start justify-between gap-8">
               <div className="w-full md:w-1/2">
                 <img
-                  src="/images/remacto-logo.png"
+                  src="/images/Group_790.png"
                   alt="REMACTO Logo"
                   className="max-w-full h-auto mb-6"
                 />
@@ -62,20 +62,34 @@ const HomePage = () => {
               </div>
 
               <div className="w-full md:w-1/2">
-                <div className="border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="bg-gray-100 py-3 px-4 border-b border-gray-200">
-                    <h3 className="text-lg font-medium text-center">
+                <div className="border border-gray-200 rounded-lg p-6 bg-white shadow-lg">
+                  <div className="bg-gray-100 py-4 px-6 rounded-t-lg border-b border-gray-200">
+                    <h3 className="text-xl font-bold text-center text-gray-800">
                       Royaume du Maroc
                     </h3>
-                    <p className="text-sm text-gray-600 text-center">
+                    <p className="text-sm text-gray-600 text-center mt-2">
                       Communes, Provinces, Préfectures et Régions
                     </p>
                   </div>
-                  <img
-                    src="/images/morocco-map.png"
-                    alt="Carte du Maroc"
-                    className="w-full h-auto"
-                  />
+                  <div className="p-6">
+                    <div className="bg-blue-50 p-4 rounded-lg">
+                      <h4 className="text-lg font-semibold text-blue-800 mb-3">Statistiques Clés</h4>
+                      <ul className="space-y-3">
+                        <li className="flex justify-between">
+                          <span className="text-gray-600">Régions</span>
+                          <span className="font-bold text-blue-700">12</span>
+                        </li>
+                        <li className="flex justify-between">
+                          <span className="text-gray-600">Provinces et Préfectures</span>
+                          <span className="font-bold text-blue-700">75</span>
+                        </li>
+                        <li className="flex justify-between">
+                          <span className="text-gray-600">Communes</span>
+                          <span className="font-bold text-blue-700">1503</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
