@@ -1,4 +1,4 @@
-# CommuneFacile (REMACTO)
+# CommuneFacile 
 
 ## Description
 CommuneFacile est une plateforme numérique moderne conçue pour améliorer la gouvernance locale et faciliter l'accès aux services administratifs au Maroc. Cette application fait partie de l'initiative REMACTO (Réseau Marocain des Collectivités Territoriales Ouvertes) qui vise à promouvoir la transparence et la bonne gouvernance au niveau local.
