@@ -1,17 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import { getUser, isAuthenticated as checkAuth } from '../utils/auth';
 
 const Header = () => {
-  const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : null;
-  const isAuthenticated = !!localStorage.getItem('token');
+  const user = getUser();
+  const isAuthenticated = checkAuth();
 
-  // Fonction katjib lien mn url men role dyal user
+  // Fonction pour obtenir le lien du dashboard en fonction du rôle
   const getDashboardLink = () => {
-    if (!user) return '/';
+    if (!user || !user.role) {
+      return '/';
+    }
     
-    switch (user.role.toLowerCase()) {
+    const role = user.role.toLowerCase();
+    switch (role) {
       case 'admin':
         return '/admin';
       case 'employee':
@@ -49,7 +52,7 @@ const Header = () => {
             <Link to="/testimonials" className="text-gray-800 hover:text-red-600 font-medium">
               Témoignages
             </Link>
-            {isAuthenticated && (
+            {isAuthenticated && user && user.role && (
               <Link to={getDashboardLink()} className="text-gray-800 hover:text-red-600 font-medium">
                 Dashboard
               </Link>
