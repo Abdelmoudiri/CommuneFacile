@@ -8,17 +8,23 @@ const HomePage = () => {
   const carouselSlides = [
     {
       id: 1,
-      image: "/images/slide1.png",
+      image: "../../public/images/slide1.png",
       alt: "Slide 1"
     },
     {
       id: 2,
-      image: "/images/slide2.png",
+      image: "../../public/images/slide2.png",
       alt: "Slide 2"
     },
     {
       id: 3,
-      image: "/images/slide3.png", 
+      image: "../../public/images/slide3.png", 
+      alt: "Slide 3"
+    }
+    ,
+    {
+      id: 4,
+      image: "../../public/images/slide4.png", 
       alt: "Slide 3"
     }
   ];
