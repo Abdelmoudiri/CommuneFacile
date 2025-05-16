@@ -69,6 +69,16 @@ class JwtAuthController extends Controller
         $input = $request->validated();
 
         $input['password'] = bcrypt($input['password']);
+
+        $role = Role::where('id', $input['role_id'])->first();
+            if (!$role) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Role not found'
+                ], 404);
+            }
+
+
         $input['role_id'] = $input['role_id'] ?? 3;
 
         unset($input['c_password']);
