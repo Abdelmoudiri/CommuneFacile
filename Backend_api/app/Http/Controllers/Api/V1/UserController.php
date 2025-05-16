@@ -14,16 +14,18 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    // afficher tous les users
     public function index()
     {
         $users = User::with(['role', 'profile'])->get();
-        dd($users);
+        // dd(vars: $users);
         return response()->json([
             'status' => 'success',
             'data' => $users,
         ]);
     }
 
+    // afficher un user
     public function show($id)
     {
         $user = User::with(['role', 'profile'])->find($id);
@@ -41,6 +43,7 @@ class UserController extends Controller
         ]);
     }
 
+    // enregistrer un employeur
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
